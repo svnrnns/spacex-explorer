@@ -7,7 +7,7 @@ export const env = createEnv({
    * Will throw if you access these variables on the client.
    */
   server: {
-    SPACEX_API_KEY: z.url(),
+    SSPACEX_API_URL: z.url(),
   },
   /*
    * Environment variables available on the client (and server).
@@ -17,6 +17,6 @@ export const env = createEnv({
    * Specify what values should be validated by your schemas above.
    */
   runtimeEnv: {
-    SPACEX_API_KEY: process.env.SPACEX_API_KEY,
+    SSPACEX_API_URL: process.env.SSPACEX_API_URL,
   },
 });
