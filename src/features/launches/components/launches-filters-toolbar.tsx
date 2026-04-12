@@ -130,6 +130,7 @@ export function LaunchesFiltersToolbar({ totalDocs }: { totalDocs: number }) {
         </form>
         <Link
           href="/favorites"
+          prefetch={false}
           className={cn(
             buttonVariants({ variant: "outline", size: "md" }),
             "no-underline shrink-0",

@@ -42,6 +42,7 @@ export function FavoritesPageClient() {
           <div className="min-w-0 flex-1 flex flex-col gap-0.5">
             <Link
               href={`/launches/${item.id}`}
+              prefetch={false}
               className="text-sm font-medium text-heading hover:underline truncate"
             >
               {item.name}
@@ -54,6 +55,7 @@ export function FavoritesPageClient() {
           <div className="flex shrink-0 items-center gap-2">
             <Link
               href={`/launches/${item.id}`}
+              prefetch={false}
               className={cn(
                 buttonVariants({ variant: "default", size: "sm" }),
                 "no-underline",

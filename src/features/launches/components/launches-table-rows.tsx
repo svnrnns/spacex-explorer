@@ -29,7 +29,7 @@ export function LaunchesTableRows({
       <td className="p-0 align-middle">
         <Link
           href={`/launches/${launch.id}`}
-          prefetch
+          prefetch={false}
           className={cn(
             LAUNCHES_TABLE_ROW_GRID_CLASS,
             "py-2.5 text-font hover:bg-box/50 w-full text-left no-underline items-center focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-main/35 focus-visible:ring-offset-2 focus-visible:ring-offset-body",
