@@ -1,7 +1,2 @@
-export default function Home() {
-  return (
-    <div className="flex flex-col py-12">
-      <h1 className="text-2xl text-heading font-medium">SpaceX Explore</h1>
-    </div>
-  );
-}
+export { default } from "@/features/launches/components/launches-list";
+// export { default } from "./loading";

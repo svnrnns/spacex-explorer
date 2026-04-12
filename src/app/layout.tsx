@@ -2,6 +2,8 @@ import type { Metadata } from "next";
 import { Inter } from "next/font/google";
 import "../styles/main.css";
 import { cn } from "@/lib/utils";
+import { ThemeButton } from "@/components/theme-button";
+import { ThemeProvider } from "next-themes";
 
 const inter = Inter({ subsets: ["latin"], variable: "--font-inter" });
 
@@ -16,9 +18,23 @@ export default function RootLayout({
   children: React.ReactNode;
 }>) {
   return (
-    <html lang="en" className={cn("h-full", "antialiased", inter.variable)}>
-      <body className="min-h-full w-full max-w-[1280px] mx-auto flex flex-col p-[5%] sm:p-4 ">
-        {children}
+    <html
+      lang="en"
+      suppressHydrationWarning
+      className={cn("h-full", "antialiased", inter.variable)}
+    >
+      <body className="min-h-full w-full max-w-[1280px] mx-auto">
+        <ThemeProvider defaultTheme="system" enableSystem>
+          <div className="w-full flex flex-col p-[5%] sm:p-4">
+            <div className="w-full flex items-center justify-between gap-4">
+              <span className="text-font/50 text-xs">
+                SpaceX Explorer - Miguel Montesinos
+              </span>
+              <ThemeButton />
+            </div>
+            {children}
+          </div>
+        </ThemeProvider>
       </body>
     </html>
   );

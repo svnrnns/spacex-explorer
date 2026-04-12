@@ -9,8 +9,6 @@ export type ApiRequestArgs<T = unknown> = {
 };
 
 function getBaseUrl(): string {
-  if (typeof typeof window !== "undefined")
-    throw new Error("Not available on the client side");
   return env.SPACEX_API_KEY;
 }
 
@@ -20,14 +18,10 @@ export function resolveApiUrl(endpoint: string): string {
   return `${base}${path}`;
 }
 
-function requestConfig(
-  args: ApiRequestArgs,
-  extra?: Pick<AxiosRequestConfig, "data">,
-): AxiosRequestConfig {
+function requestConfig(args: ApiRequestArgs): AxiosRequestConfig {
   return {
     url: resolveApiUrl(args.endpoint),
     params: args.params,
-    ...extra,
   };
 }
 
