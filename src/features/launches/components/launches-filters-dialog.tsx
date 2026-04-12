@@ -7,7 +7,6 @@ import { useRef, useState } from "react";
 
 import { Button } from "@/components/ui/button";
 import {
-  DialogClose,
   DialogContent,
   DialogDescription,
   DialogFooter,
@@ -304,9 +303,6 @@ function LaunchesFiltersDialogForm({
         </div>
       </form>
       <DialogFooter className="gap-2 px-6 py-4 sm:flex-row sm:flex-wrap sm:justify-end">
-        <DialogClose render={<Button type="button" variant="ghost" />}>
-          Close
-        </DialogClose>
         <Button
           type="button"
           variant="outline"
