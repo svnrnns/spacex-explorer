@@ -4,7 +4,7 @@ import type {
   LaunchWhenFilter,
 } from "@/features/launches/api/launch-list-filters";
 
-const LAUNCHES_FILTERS_DRAWER_FIELD_CLASS =
+const LAUNCHES_FILTERS_DIALOG_FIELD_CLASS =
   "w-full rounded-md border border-border/70 bg-background px-3 py-2 text-sm text-heading shadow-xs outline-none focus-visible:border-main focus-visible:ring-2 focus-visible:ring-main/20";
 
 const LAUNCHES_WHEN_FILTER_OPTIONS: {
@@ -36,7 +36,7 @@ const LAUNCHES_SORT_FILTER_OPTIONS: {
 ];
 
 export {
-  LAUNCHES_FILTERS_DRAWER_FIELD_CLASS,
+  LAUNCHES_FILTERS_DIALOG_FIELD_CLASS,
   LAUNCHES_WHEN_FILTER_OPTIONS,
   LAUNCHES_OUTCOME_FILTER_OPTIONS,
   LAUNCHES_SORT_FILTER_OPTIONS,

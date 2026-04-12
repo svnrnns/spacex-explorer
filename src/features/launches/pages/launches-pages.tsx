@@ -1,3 +1,5 @@
+import type { Metadata } from "next";
+
 import { getLaunches } from "@/features/launches/api/launches-actions";
 import { parseLaunchListFilters } from "@/features/launches/api/launch-list-filters";
 import { LaunchesFiltersToolbar } from "@/features/launches/components/launches-filters-toolbar";
@@ -5,7 +7,13 @@ import { LaunchesListNavProvider } from "@/features/launches/components/launches
 import { LaunchesTableInfinite } from "@/features/launches/components/launches-table-infinite";
 import { launchListFiltersKey } from "@/features/launches/utils/launch-list-filters-key";
 
-export default async function LaunchesList({
+export const metadata: Metadata = {
+  title: "Launches",
+  description:
+    "Browse SpaceX launches with filters, dates, and outcomes. Paginated list backed by the SpaceX API.",
+};
+
+export default async function LaunchesPages({
   searchParams,
 }: {
   searchParams: Promise<Record<string, string | string[] | undefined>>;

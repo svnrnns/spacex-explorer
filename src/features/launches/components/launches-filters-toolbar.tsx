@@ -6,14 +6,14 @@ import { useEffect, useRef, useState } from "react";
 import { useSearchParams } from "next/navigation";
 
 import { Button } from "@/components/ui/button";
-import { Drawer, DrawerTrigger } from "@/components/ui/drawer";
+import { Dialog, DialogTrigger } from "@/components/ui/dialog";
 import {
   InputGroup,
   InputGroupAddon,
   InputGroupButton,
   InputGroupInput,
 } from "@/components/ui/inputs/input-group";
-import { LaunchesFiltersDrawerPanel } from "@/features/launches/components/launches-filters-drawer";
+import { LaunchesFiltersDialogPanel } from "@/features/launches/components/launches-filters-dialog";
 import { useLaunchesListNav } from "@/features/launches/components/launches-list-nav-context";
 
 export function LaunchesFiltersToolbar({ totalDocs }: { totalDocs: number }) {
@@ -21,7 +21,7 @@ export function LaunchesFiltersToolbar({ totalDocs }: { totalDocs: number }) {
   const { isPending: isFilterNavPending, navigateLaunchesList } =
     useLaunchesListNav();
   const missionInputRef = useRef<HTMLInputElement>(null);
-  const [drawerOpen, setDrawerOpen] = useState(false);
+  const [filtersOpen, setFiltersOpen] = useState(false);
   const searchParamsKey = searchParams.toString();
   const missionSearchFromUrl = searchParams.get("q") ?? "";
 
@@ -125,19 +125,19 @@ export function LaunchesFiltersToolbar({ totalDocs }: { totalDocs: number }) {
             </InputGroupButton>
           </InputGroup>
         </form>
-        <Drawer
-          direction="right"
-          open={drawerOpen}
-          onOpenChange={setDrawerOpen}
-        >
-          <DrawerTrigger asChild>
-            <Button variant="outline" size="md">
-              <ListFilter className="size-4" aria-hidden />
-              Filters
-            </Button>
-          </DrawerTrigger>
-          <LaunchesFiltersDrawerPanel onApplied={() => setDrawerOpen(false)} />
-        </Drawer>
+        <Dialog open={filtersOpen} onOpenChange={setFiltersOpen}>
+          <DialogTrigger
+            render={
+              <Button variant="outline" size="md">
+                <ListFilter className="size-4" aria-hidden />
+                Filters
+              </Button>
+            }
+          />
+          <LaunchesFiltersDialogPanel
+            onApplied={() => setFiltersOpen(false)}
+          />
+        </Dialog>
       </div>
     </div>
   );

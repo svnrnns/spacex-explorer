@@ -7,13 +7,13 @@ import { useRef, useState } from "react";
 
 import { Button } from "@/components/ui/button";
 import {
-  DrawerClose,
-  DrawerContent,
-  DrawerDescription,
-  DrawerFooter,
-  DrawerHeader,
-  DrawerTitle,
-} from "@/components/ui/drawer";
+  DialogClose,
+  DialogContent,
+  DialogDescription,
+  DialogFooter,
+  DialogHeader,
+  DialogTitle,
+} from "@/components/ui/dialog";
 import {
   DropdownMenu,
   DropdownMenuCheckboxItem,
@@ -28,11 +28,11 @@ import type {
   LaunchWhenFilter,
 } from "@/features/launches/api/launch-list-filters";
 import {
-  LAUNCHES_FILTERS_DRAWER_FIELD_CLASS,
+  LAUNCHES_FILTERS_DIALOG_FIELD_CLASS,
   LAUNCHES_OUTCOME_FILTER_OPTIONS,
   LAUNCHES_SORT_FILTER_OPTIONS,
   LAUNCHES_WHEN_FILTER_OPTIONS,
-} from "@/features/launches/constants/launches-filters-drawer-constants";
+} from "@/features/launches/constants/launches-filters-dialog-constants";
 import {
   parseOutcomeFilterFromSearchParams,
   parseSortFilterFromSearchParams,
@@ -41,23 +41,23 @@ import {
 import { useLaunchesListNav } from "@/features/launches/components/launches-list-nav-context";
 import { cn } from "@/lib/utils";
 
-type LaunchesFiltersDrawerPanelProps = {
+type LaunchesFiltersDialogPanelProps = {
   onApplied: () => void;
 };
 
-type LaunchesFiltersDrawerFormProps = {
+type LaunchesFiltersDialogFormProps = {
   searchParamsKey: string;
   searchParams: ReturnType<typeof useSearchParams>;
   onApplied: () => void;
   menuPortalRef: RefObject<HTMLDivElement | null>;
 };
 
-function LaunchesFiltersDrawerForm({
+function LaunchesFiltersDialogForm({
   searchParamsKey,
   searchParams,
   onApplied,
   menuPortalRef,
-}: LaunchesFiltersDrawerFormProps) {
+}: LaunchesFiltersDialogFormProps) {
   const { isPending: isFilterNavPending, navigateLaunchesList } =
     useLaunchesListNav();
   const initialParams = new URLSearchParams(searchParamsKey);
@@ -119,7 +119,7 @@ function LaunchesFiltersDrawerForm({
     <>
       <form
         id="launches-filters-form"
-        className="flex min-h-0 flex-1 flex-col gap-4 overflow-y-auto px-4 pb-2"
+        className="flex min-h-0 flex-1 flex-col gap-4 overflow-y-auto px-6 pb-2"
         onSubmit={onSubmit}
       >
         <input type="hidden" name="q" value={searchParams.get("q") ?? ""} />
@@ -236,7 +236,7 @@ function LaunchesFiltersDrawerForm({
               id="filter-from"
               name="from"
               type="date"
-              className={LAUNCHES_FILTERS_DRAWER_FIELD_CLASS}
+              className={LAUNCHES_FILTERS_DIALOG_FIELD_CLASS}
               defaultValue={searchParams.get("from") ?? ""}
             />
           </div>
@@ -246,7 +246,7 @@ function LaunchesFiltersDrawerForm({
               id="filter-to"
               name="to"
               type="date"
-              className={LAUNCHES_FILTERS_DRAWER_FIELD_CLASS}
+              className={LAUNCHES_FILTERS_DIALOG_FIELD_CLASS}
               defaultValue={searchParams.get("to") ?? ""}
             />
           </div>
@@ -303,16 +303,13 @@ function LaunchesFiltersDrawerForm({
           </DropdownMenu>
         </div>
       </form>
-      <DrawerFooter className="flex-row flex-wrap gap-2 sm:justify-end">
-        <DrawerClose asChild>
-          <Button type="button" variant="ghost" size="sm">
-            Close
-          </Button>
-        </DrawerClose>
+      <DialogFooter className="gap-2 px-6 py-4 sm:flex-row sm:flex-wrap sm:justify-end">
+        <DialogClose render={<Button type="button" variant="ghost" />}>
+          Close
+        </DialogClose>
         <Button
           type="button"
           variant="outline"
-          size="sm"
           disabled={isFilterNavPending}
           onClick={onReset}
         >
@@ -321,37 +318,36 @@ function LaunchesFiltersDrawerForm({
         <Button
           type="submit"
           form="launches-filters-form"
-          size="sm"
           disabled={isFilterNavPending}
         >
           Apply filters
         </Button>
-      </DrawerFooter>
+      </DialogFooter>
     </>
   );
 }
 
-export function LaunchesFiltersDrawerPanel({
+export function LaunchesFiltersDialogPanel({
   onApplied,
-}: LaunchesFiltersDrawerPanelProps) {
+}: LaunchesFiltersDialogPanelProps) {
   const searchParams = useSearchParams();
   const searchParamsKey = searchParams.toString();
   const menuPortalRef = useRef<HTMLDivElement>(null);
 
   return (
-    <DrawerContent>
-      <DrawerHeader>
-        <DrawerTitle>Filters</DrawerTitle>
-        <DrawerDescription>
+    <DialogContent className="flex max-h-[85vh] flex-col gap-0 overflow-hidden p-0 sm:max-w-lg">
+      <DialogHeader className="shrink-0 px-6 pt-6 text-left sm:text-left">
+        <DialogTitle>Filters</DialogTitle>
+        <DialogDescription>
           Narrow launches by schedule, outcome, and date. Sorting applies to the
           table results.
-        </DrawerDescription>
-      </DrawerHeader>
+        </DialogDescription>
+      </DialogHeader>
       <div
         ref={menuPortalRef}
         className="flex min-h-0 min-w-0 flex-1 flex-col overflow-hidden"
       >
-        <LaunchesFiltersDrawerForm
+        <LaunchesFiltersDialogForm
           key={searchParamsKey}
           searchParamsKey={searchParamsKey}
           searchParams={searchParams}
@@ -359,6 +355,6 @@ export function LaunchesFiltersDrawerPanel({
           menuPortalRef={menuPortalRef}
         />
       </div>
-    </DrawerContent>
+    </DialogContent>
   );
 }
