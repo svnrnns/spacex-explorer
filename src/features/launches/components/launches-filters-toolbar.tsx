@@ -1,11 +1,12 @@
 "use client";
 
-import { ListFilter, Search, X } from "lucide-react";
+import Link from "next/link";
+import { ListFilter, Search, Star, X } from "lucide-react";
 import type { FormEvent } from "react";
 import { useEffect, useRef, useState } from "react";
 import { useSearchParams } from "next/navigation";
 
-import { Button } from "@/components/ui/button";
+import { Button, buttonVariants } from "@/components/ui/button";
 import { Dialog, DialogTrigger } from "@/components/ui/dialog";
 import {
   InputGroup,
@@ -15,6 +16,8 @@ import {
 } from "@/components/ui/inputs/input-group";
 import { LaunchesFiltersDialogPanel } from "@/features/launches/components/launches-filters-dialog";
 import { useLaunchesListNav } from "@/features/launches/components/launches-list-nav-context";
+import { LAUNCHES_FILTERS_TOOLBAR_OUTLINE_MD_RESPONSIVE_ICON } from "@/features/launches/constants/launches-filters-toolbar-constants";
+import { cn } from "@/lib/utils";
 
 export function LaunchesFiltersToolbar({ totalDocs }: { totalDocs: number }) {
   const searchParams = useSearchParams();
@@ -125,18 +128,31 @@ export function LaunchesFiltersToolbar({ totalDocs }: { totalDocs: number }) {
             </InputGroupButton>
           </InputGroup>
         </form>
+        <Link
+          href="/favorites"
+          className={cn(
+            buttonVariants({ variant: "outline", size: "md" }),
+            "no-underline shrink-0",
+            LAUNCHES_FILTERS_TOOLBAR_OUTLINE_MD_RESPONSIVE_ICON,
+          )}
+        >
+          <Star className="size-4" aria-hidden />
+          <span className="sr-only sm:not-sr-only">Favorites</span>
+        </Link>
         <Dialog open={filtersOpen} onOpenChange={setFiltersOpen}>
           <DialogTrigger
             render={
-              <Button variant="outline" size="md">
+              <Button
+                variant="outline"
+                size="md"
+                className={LAUNCHES_FILTERS_TOOLBAR_OUTLINE_MD_RESPONSIVE_ICON}
+              >
                 <ListFilter className="size-4" aria-hidden />
-                Filters
+                <span className="sr-only sm:not-sr-only">Filters</span>
               </Button>
             }
           />
-          <LaunchesFiltersDialogPanel
-            onApplied={() => setFiltersOpen(false)}
-          />
+          <LaunchesFiltersDialogPanel onApplied={() => setFiltersOpen(false)} />
         </Dialog>
       </div>
     </div>

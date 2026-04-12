@@ -7,6 +7,7 @@ import { LaunchDetailGallery } from "@/features/launch-detail/components/launch-
 import { LaunchDetailLaunchpadPanel } from "@/features/launch-detail/components/launch-detail-launchpad-panel";
 import { LaunchDetailLinks } from "@/features/launch-detail/components/launch-detail-links";
 import { LaunchDetailRocketPanel } from "@/features/launch-detail/components/launch-detail-rocket-panel";
+import { LaunchDetailFavoriteButton } from "@/features/launch-detail/components/launch-detail-favorite-button";
 import { LaunchDetailShareButton } from "@/features/launch-detail/components/launch-detail-share-button";
 import type { LaunchpadDoc } from "@/lib/api/types/launchpad";
 import type { LaunchQueryDoc } from "@/lib/api/types/launch-query";
@@ -103,7 +104,17 @@ export function LaunchDetail({
               </div>
             </div>
           </div>
-          <LaunchDetailShareButton path={sharePath} />
+          <div className="flex shrink-0 flex-wrap items-center gap-2">
+            <LaunchDetailFavoriteButton
+              launch={{
+                id: launch.id,
+                name: launch.name,
+                flight_number: launch.flight_number,
+                date_utc: launch.date_utc,
+              }}
+            />
+            <LaunchDetailShareButton path={sharePath} />
+          </div>
         </div>
       </div>
 

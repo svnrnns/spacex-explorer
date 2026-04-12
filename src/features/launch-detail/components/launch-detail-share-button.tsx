@@ -9,7 +9,9 @@ type LaunchDetailShareButtonProps = {
   path: string;
 };
 
-export function LaunchDetailShareButton({ path }: LaunchDetailShareButtonProps) {
+export function LaunchDetailShareButton({
+  path,
+}: LaunchDetailShareButtonProps) {
   const [copied, setCopied] = useState(false);
 
   const onCopy = useCallback(async () => {
@@ -26,10 +28,10 @@ export function LaunchDetailShareButton({ path }: LaunchDetailShareButtonProps) 
   return (
     <Button
       type="button"
-      variant="outline"
+      variant="secondary"
       size="sm"
       onClick={() => void onCopy()}
-      className="gap-2"
+      className="gap-2 flex-1"
     >
       {copied ? (
         <>

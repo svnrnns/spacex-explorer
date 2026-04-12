@@ -7,6 +7,7 @@ import type { LaunchListFilters } from "@/features/launches/api/launch-list-filt
 import { LaunchesTableHead } from "@/features/launches/components/launches-table-head";
 import { useLaunchesListNav } from "@/features/launches/components/launches-list-nav-context";
 import { LaunchesTableNoResults } from "@/features/launches/components/launches-table-no-results";
+import { useFavoriteLaunches } from "@/features/favorites/hooks/use-favorite-launches";
 import { LaunchesTableRows } from "@/features/launches/components/launches-table-rows";
 import {
   LaunchesTableSkeletonRows,
@@ -29,6 +30,7 @@ export function LaunchesTableInfinite({
   initialResult,
 }: LaunchesTableInfiniteProps) {
   const { isPending: isFilterNavPending } = useLaunchesListNav();
+  const { favoriteIdSet } = useFavoriteLaunches();
   const [docs, setDocs] = useState<LaunchQueryDoc[]>(initialResult.docs);
   const [hasNextPage, setHasNextPage] = useState(initialResult.hasNextPage);
   const [nextOffset, setNextOffset] = useState(
@@ -94,7 +96,7 @@ export function LaunchesTableInfinite({
             )}
             {showNoResults && <LaunchesTableNoResults />}
             {!showFilterSkeleton && docs.length > 0 && (
-              <LaunchesTableRows docs={docs} />
+              <LaunchesTableRows docs={docs} favoriteIds={favoriteIdSet} />
             )}
             {!showFilterSkeleton && loadingMore && (
               <LaunchesTableSkeletonRows rows={LOAD_MORE_SKELETON_ROWS} />
