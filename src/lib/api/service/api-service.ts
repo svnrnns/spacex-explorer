@@ -9,7 +9,7 @@ export type ApiRequestArgs<T = unknown> = {
 };
 
 function getBaseUrl(): string {
-  return env.SSPACEX_API_URL;
+  return env.SPACEX_API_URL;
 }
 
 export function resolveApiUrl(endpoint: string): string {
