@@ -11,21 +11,21 @@ A small Next.js app to browse SpaceX launches. Data comes from the public [Space
 ```
 
 1. **Environment**
-  Create a `.env` (or `.env.local`) file. The app expects a **server-only** variable whose name is `SPACEX_API_URL` but whose value must be a **full base URL**. Copy the key from `.env.example`
+   Create a `.env` (or `.env.local`) file. The app expects a **server-only** variable whose name is `SPACEX_API_URL` but whose value must be a **full base URL**. Copy the key from `.env.example`
 2. **Development**
 
 ```bash
  npm run dev
 ```
 
-1. **Production**
+3. **Production**
 
 ```bash
  npm run build
  npm run start
 ```
 
-1. **Lint**
+4. **Lint**
 
 ```bash
  npm run lint
@@ -54,14 +54,12 @@ The project does **not** use SWR, TanStack Query, or similar. Instead it uses:
 
 ### Endpoints
 
-
 | Use case                     | Method | Path               | Notes                                                              |
 | ---------------------------- | ------ | ------------------ | ------------------------------------------------------------------ |
 | Filtered, sorted launch list | `POST` | `/launches/query`  | Body: Mongo-style `query` + `options` (`limit`, `offset`, `sort`). |
 | Single launch                | `GET`  | `/launches/{id}`   | 404 → treated as missing launch on detail.                         |
 | Rocket                       | `GET`  | `/rockets/{id}`    | Optional; launch may omit rocket id.                               |
 | Launchpad                    | `GET`  | `/launchpads/{id}` | Optional.                                                          |
-
 
 Launch detail loads launch first, then loads rocket and launchpad **in parallel** with `Promise.all` when ids exist.
 
@@ -82,7 +80,7 @@ Filters from the URL (`q`, `when`, `outcome`, `from`, `to`, `sort`) are parsed s
 - **SSR for the first launches page** so filters in the URL produce meaningful HTML without waiting for client hydration.
 - `useTransition` + `router.push` for filter/search navigation so the UI can show pending skeleton state without blocking typing.
 - `reactStrictMode: true` in `next.config.ts`.
-- `htmlLimitedBots: /.*/`** so metadata generation follows the “blocking” behavior described in Next.js docs for bots (project-specific choice).
+- `htmlLimitedBots: /.*/`\*\* so metadata generation follows the “blocking” behavior described in Next.js docs for bots (project-specific choice).
 - **Parallel fetches** on launch detail for rocket and launchpad.
 - **Horizontal scroll** on narrow viewports for the launches table (`overflow-x-auto`) so the grid does not crush columns.
 
@@ -110,4 +108,3 @@ Filters from the URL (`q`, `when`, `outcome`, `from`, `to`, `sort`) are parsed s
 - **Filter total** (`totalDocs`) reflects the API count for the current query; very large result sets still load in chunks of 40 only as the user scrolls.
 - **No automated tests**.
 - **Date picker component** could be made. Using native datepicker right now.
-
