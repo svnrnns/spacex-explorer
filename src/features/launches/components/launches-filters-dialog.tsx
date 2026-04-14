@@ -118,7 +118,7 @@ function LaunchesFiltersDialogForm({
     <>
       <form
         id="launches-filters-form"
-        className="flex min-h-0 flex-1 flex-col gap-4 overflow-y-auto px-6 pb-2"
+        className="flex min-h-0 flex-1 flex-col gap-4 overflow-y-auto px-6"
         onSubmit={onSubmit}
       >
         <input type="hidden" name="q" value={searchParams.get("q") ?? ""} />
@@ -302,7 +302,7 @@ function LaunchesFiltersDialogForm({
           </DropdownMenu>
         </div>
       </form>
-      <DialogFooter className="gap-2 px-6 py-4 sm:flex-row sm:flex-wrap sm:justify-end">
+      <DialogFooter className="gap-2 px-6 pt-6 pb-4 sm:flex-row sm:flex-wrap sm:justify-end">
         <Button
           type="button"
           variant="outline"
@@ -332,7 +332,7 @@ export function LaunchesFiltersDialogPanel({
 
   return (
     <DialogContent className="flex max-h-[85vh] flex-col gap-0 overflow-hidden p-0 sm:max-w-lg">
-      <DialogHeader className="shrink-0 px-6 pt-6 text-left sm:text-left">
+      <DialogHeader className="shrink-0 px-6 pt-6 pb-4 text-left sm:text-left">
         <DialogTitle>Filters</DialogTitle>
         <DialogDescription>
           Narrow launches by schedule, outcome, and date. Sorting applies to the

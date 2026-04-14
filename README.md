@@ -11,14 +11,14 @@ A small Next.js app to browse SpaceX launches. Data comes from the public [Space
 ```
 
 1. **Environment**
-  Create a `.env` (or `.env.local`) file. The app expects a **server-only** variable whose name is `SSPACEX_API_URL` but whose value must be the **full base URL**. Copy the key from `.env.example`
+  Create a `.env` (or `.env.local`) file. The app expects a **server-only** variable whose name is `SPACEX_API_URL` but whose value must be a **full base URL**. Copy the key from `.env.example`
 2. **Development**
 
 ```bash
  npm run dev
 ```
 
-Open [http://localhost:3000](http://localhost:3000). 4. **Production**
+1. **Production**
 
 ```bash
  npm run build
@@ -48,7 +48,7 @@ The project does **not** use SWR, TanStack Query, or similar. Instead it uses:
 - **Server Actions** (`"use server"`) for the launches list: `POST /launches/query` runs on the server, and `loadMoreLaunches` is called from the client for infinite scroll but also never leaked to the client.
 - **Local React state** on the client to append pages and track `hasNextPage` / offset. No global client cache library.
 
-**Why:** The list’s first page is server-rendered from `searchParams`; extra pages are a simple “append rows” flow. Server actions avoid exposing the API base URL to the browser and keep types on the server boundary. The tradeoff is no built-in request deduplication, retries, or background refetch on the client—see below.
+**Why:** The list’s first page is server-rendered from `searchParams`; extra pages are a simple “append rows” flow. Server actions avoid exposing the API base URL to the browser and keep types on the server boundary. The tradeoff is no built-in request deduplication, retries, or background refetch on the client. See below.
 
 ## SpaceX API usage
 
@@ -80,9 +80,9 @@ Filters from the URL (`q`, `when`, `outcome`, `from`, `to`, `sort`) are parsed s
 ### Performance
 
 - **SSR for the first launches page** so filters in the URL produce meaningful HTML without waiting for client hydration.
-- `**useTransition` + `router.push` for filter/search navigation so the UI can show pending skeleton state without blocking typing.
-- `**reactStrictMode: true`** in `next.config.ts`.
-- `htmlLimitedBots: /.*/**` so metadata generation follows the “blocking” behavior described in Next.js docs for bots (project-specific choice).
+- `useTransition` + `router.push` for filter/search navigation so the UI can show pending skeleton state without blocking typing.
+- `reactStrictMode: true` in `next.config.ts`.
+- `htmlLimitedBots: /.*/`** so metadata generation follows the “blocking” behavior described in Next.js docs for bots (project-specific choice).
 - **Parallel fetches** on launch detail for rocket and launchpad.
 - **Horizontal scroll** on narrow viewports for the launches table (`overflow-x-auto`) so the grid does not crush columns.
 
@@ -98,7 +98,7 @@ Filters from the URL (`q`, `when`, `outcome`, `from`, `to`, `sort`) are parsed s
 
 ## Tradeoffs and what we’d do next
 
-- **Client data library:** Adding TanStack Query (or SWR) would give retries, stale-while-revalidate, and simpler infinite-query
+- **Client data library:** Adding TanStack Query (or SWR) would give retries, stale-while-revalidate, and simpler infinite-query.
 - **Favorites:** Stored only in `localStorage` with a sync hook for React; no accounts, no cross-device sync, and stale rows if a favorite launch is removed from the API.
 - **Error handling:** Network failures on “load more” could surface inline toasts or retry UI instead of failing silently in the client flow.
 - Extra: develop more optional features (offline support, charts, launch comparison...)
